@@ -89,25 +89,34 @@ jQuery(document).ready(function($) {
       }
     });
     if (ferror) return false;
-    else var str = $(this).serialize();
-    $.ajax({
-      type: "POST",
-      url: "contactform/contactform.php",
-      data: str,
-      success: function(msg) {
-        // alert(msg);
-        if (msg == 'OK') {
-          $("#sendmessage").addClass("show");
-          $("#errormessage").removeClass("show");
-          $('.contactForm').find("input, textarea").val("");
-        } else {
-          $("#sendmessage").removeClass("show");
-          $("#errormessage").addClass("show");
-          $('#errormessage').html(msg);
-        }
 
-      }
-    });
+    let arr = $(this).serializeArray();
+    const { email, name, subject, message } = arr.reduce(
+      (obj, item) => ({
+        ...obj,
+        [item.name]: item.value
+      }),
+      {}
+    );
+    window.location.href = `mailto:${email}?subject=${subject}&body=${message}. From: ${name}`;
+    // $.ajax({
+    //   type: "POST",
+    //   url: "contactform/contactform.php",
+    //   data: str,
+    //   success: function(msg) {
+    //     // alert(msg);
+    //     if (msg == 'OK') {
+    //       $("#sendmessage").addClass("show");
+    //       $("#errormessage").removeClass("show");
+    //       $('.contactForm').find("input, textarea").val("");
+    //     } else {
+    //       $("#sendmessage").removeClass("show");
+    //       $("#errormessage").addClass("show");
+    //       $('#errormessage').html(msg);
+    //     }
+    //
+    //   }
+    // });
     return false;
   });
 
