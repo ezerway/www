@@ -169,7 +169,7 @@ jQuery(document).ready(function( $ ) {
 
   // Hide section if no app is presented
   if (!appName) {
-    $('#privacy, #about').hide();
+    $('#privacy, #about, a[href=#privacy], a[href=#about]').hide();
   }
 });
 
