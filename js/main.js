@@ -1,3 +1,5 @@
+const appName = (new URL(location.href)).searchParams.get('app')
+
 jQuery(document).ready(function( $ ) {
 
   // Back to top button
@@ -165,12 +167,16 @@ jQuery(document).ready(function( $ ) {
   }
   google.maps.event.addDomListener(window, 'load', initialize_google_map);
 
+  // Hide section if no app is presented
+  if (!appName) {
+    $('#privacy, #about').hide();
+  }
 });
 
 class AppName extends HTMLElement {
   connectedCallback() {
     const url = new URL(location.href)
-    this.innerText = url.searchParams.get('app') || 'It';
+    this.innerText = appName || '';
   }
 }
 
